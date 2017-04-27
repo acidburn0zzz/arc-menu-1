@@ -1,2 +1,2 @@
 
-**兼容Chrome IE9**
+**兼容Chrome IE9+**
