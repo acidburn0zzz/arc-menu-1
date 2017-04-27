@@ -155,4 +155,19 @@ li{list-style:none}
     transform: scale(1);
 }
 
+/*兼容IE*/
+.arc-menu .arc-menu-s1 li a span{
+    position:absolute\0;
+    display:block\0;
+    height: 200px\0;
+    width: 200px\0;
+
+}
+.arc-menu .arc-menu-s2 li a span{
+    position:absolute\0;
+    display:block\0;
+    height: 360px\0;
+    width: 360px\0;
+}
+
 

@@ -46,8 +46,14 @@ define(['jquery','template'],function($,template){
                         arcMenuRender();
                         //菜单形状初始化
                         function arcMenuInit(arcEle,revert) {
-                                var arcParentList =arcEle.children('li'), arcParentListA = arcParentList.children('a');
+                                var arcParentList =arcEle.children('li'), arcParentListA = arcParentList.children('a'),arcParentListSpan=arcParentListA.children('span');;
                                 var arcDeg = 180 / arcParentList.length, skewDeg = 90 - arcDeg, revertDeg = -(90 - (arcDeg / 2));
+                                var childContent;
+                                function isIE(){
+                                        return (window.navigator.userAgent.indexOf("MSIE")>=1||!!window.ActiveXObject || "ActiveXObject" in window)?true:false
+                                }
+                                //兼容IE
+                                childContent=isIE()?arcParentListSpan:arcParentListA;
                                 if(!revert){
                                         if(arcParentList.length==1){
                                               arcParentList.each(function(){
@@ -80,7 +86,7 @@ define(['jquery','template'],function($,template){
                                                                 'mozTransform': 'rotate(' + angle + 'deg) skew(' + skewDeg + 'deg)'
                                                         });
                                                 });
-                                                arcParentListA.css({
+                                                childContent.css({
                                                         'transform': 'skew(-' + skewDeg + 'deg) rotate(' + revertDeg + 'deg) scale(1)',
                                                         'webkitTransform': 'skew(-' + skewDeg + 'deg) rotate(' + revertDeg + 'deg) scale(1)',
                                                         'msTransform': 'skew(-' + skewDeg + 'deg) rotate(' + revertDeg + 'deg) scale(1)',
@@ -91,20 +97,22 @@ define(['jquery','template'],function($,template){
                                                 });
                                         }
                                 }else{
-                                        arcParentList.each(function (i, el) {
-                                                $(this).css({
-                                                        'transform': 'rotate(0deg) skew(0deg)',
-                                                        'webkitTransform': 'rotate(0deg) skew(0deg)',
-                                                        'msTransform': 'rotate(0deg) skew(0deg)',
-                                                        'mozTransform': 'rotate(0deg) skew(0deg)'
+                                        if(!isIE()){
+                                                arcParentList.each(function (i, el) {
+                                                        $(this).css({
+                                                                'transform': 'rotate(0deg) skew(0deg)',
+                                                                'webkitTransform': 'rotate(0deg) skew(0deg)',
+                                                                'msTransform': 'rotate(0deg) skew(0deg)',
+                                                                'mozTransform': 'rotate(0deg) skew(0deg)'
+                                                        });
                                                 });
-                                        });
-                                        arcParentListA.css({
-                                                'transform': 'skew(0deg) rotate(0deg) scale(0.1)',
-                                                'webkitTransform': 'skew(0deg) rotate(0deg) scale(0.1)',
-                                                'msTransform': 'skew(0deg) rotate(0deg) scale(0.1)',
-                                                'mozTransform': 'skew(0deg) rotate(0deg) scale(0.1)'
-                                        });
+                                                childContent.css({
+                                                        'transform': 'skew(0deg) rotate(0deg) scale(0.1)',
+                                                        'webkitTransform': 'skew(0deg) rotate(0deg) scale(0.1)',
+                                                        'msTransform': 'skew(0deg) rotate(0deg) scale(0.1)',
+                                                        'mozTransform': 'skew(0deg) rotate(0deg) scale(0.1)'
+                                                });
+                                        }
                                 }
 
                         }
